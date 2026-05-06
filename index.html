@@ -130,7 +130,7 @@
     transition: background 0.2s, transform 0.2s; display: inline-block;
   }
   .btn-outline:hover { background: var(--black); color: var(--white); transform: translateY(-2px); }
-  .hero-features { display: flex; gap: 26px; margin-top: 44px; flex-wrap: wrap; }
+  .hero-features { display: flex; gap: 16px; margin-top: 44px; flex-wrap: nowrap; }
   .hero-feat {
     display: flex; align-items: center; gap: 10px;
     font-size: 0.86rem; font-weight: 600; color: var(--black);
@@ -519,7 +519,7 @@
     z-index: 9999; background: rgba(0,0,0,0);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 20px; box-sizing: border-box;
+    padding: 12px; box-sizing: border-box;
     opacity: 0; pointer-events: none;
     transition: opacity 0.3s ease, background 0.3s ease;
   }
@@ -527,18 +527,20 @@
   .modal-box {
     background: var(--white); border-radius: 20px;
     width: 100%; max-width: 900px;
-    max-height: calc(100vh - 40px);
-    overflow-y: auto; box-shadow: 0 30px 100px rgba(0,0,0,0.4);
+    max-height: calc(100vh - 24px);
+    overflow-y: auto; overflow-x: hidden;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.4);
     position: relative;
     transform: translateY(40px) scale(0.97); opacity: 0;
     transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
     transition-delay: 0.08s;
+    -webkit-overflow-scrolling: touch;
   }
   .modal-overlay.open .modal-box { transform: translateY(0) scale(1); opacity: 1; }
   .modal-close {
     position: sticky; top: 0; z-index: 10;
     display: flex; justify-content: flex-end;
-    padding: 16px 20px 0; background: var(--white);
+    padding: 12px 16px 0; background: var(--white);
   }
   .modal-close button {
     background: var(--grey); border: none; cursor: pointer;
@@ -547,7 +549,45 @@
     transition: background 0.2s;
   }
   .modal-close button:hover { background: #ddd; }
-  .modal-preview { padding: 0 24px 30px; }
+  .modal-preview { padding: 0 20px 28px; }
+
+  /* Mobile modal — fills screen, content scales down */
+  @media (max-width: 600px) {
+    .modal-overlay { padding: 0; align-items: flex-end; }
+    .modal-box {
+      border-radius: 20px 20px 0 0;
+      max-height: 92vh;
+      width: 100%;
+    }
+    .modal-preview { padding: 0 12px 20px; }
+    /* Scale down inner preview content on mobile */
+    .modal-preview > div {
+      transform-origin: top left;
+      font-size: 0.72rem;
+    }
+    /* All inner grids → single column */
+    .modal-preview [style*="grid-template-columns"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    /* Inner flex rows → wrap */
+    .modal-preview [style*="display:flex"] {
+      flex-wrap: wrap;
+    }
+    /* Limit inner image heights */
+    .modal-preview [style*="height:110px"] { height: 70px !important; }
+    .modal-preview [style*="height:48px"] { height: 36px !important; }
+    /* Reduce huge font sizes inside previews */
+    .modal-preview [style*="font-size:2.4rem"] { font-size: 1.3rem !important; }
+    .modal-preview [style*="font-size:2.2rem"] { font-size: 1.2rem !important; }
+    /* Reduce padding inside preview */
+    .modal-preview [style*="padding:64px"] { padding: 24px 16px !important; }
+    .modal-preview [style*="padding:52px"] { padding: 20px 16px !important; }
+    .modal-preview [style*="padding:36px"] { padding: 16px 12px !important; }
+    .modal-preview [style*="padding:32px"] { padding: 14px 12px !important; }
+    .modal-preview [style*="padding:28px"] { padding: 14px 12px !important; }
+  }
+
   .modal-label {
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
@@ -704,7 +744,7 @@
     #hero { padding: 90px 16px 48px !important; }
     #hero h1 { font-size: 1.9rem !important; }
 
-    .hero-features { flex-direction: column; gap: 10px; }
+    .hero-features { gap: 10px; }
 
     .band-yellow { padding: 44px 16px !important; }
     .band-text h2 { font-size: 1.5rem !important; }
@@ -821,44 +861,6 @@
   <p data-i18n="band_p"></p>
 </div>
 
-<!-- COLLAB -->
-<section id="collab">
-  <div class="collab-visual reveal">
-    <div class="collab-browser-bar">
-      <div class="collab-dot" style="background:#ff5f57"></div>
-      <div class="collab-dot" style="background:#febc2e"></div>
-      <div class="collab-dot" style="background:#28c840"></div>
-    </div>
-    <div class="col-row">
-      <div class="col-block" style="height:76px;background:var(--yellow)"></div>
-      <div class="col-block" style="height:76px;background:var(--pink);animation-delay:.4s"></div>
-    </div>
-    <div class="col-row">
-      <div class="col-block" style="height:48px;background:var(--grey);flex:2;animation-delay:.7s"></div>
-      <div class="col-block" style="height:48px;background:var(--pink-dark);opacity:.5;animation-delay:1s"></div>
-    </div>
-    <div class="col-row">
-      <div class="col-block" style="height:34px;background:rgba(0,0,0,0.06);flex:3;border-radius:9px"></div>
-      <div class="col-block" style="height:34px;background:var(--yellow);flex:1;border-radius:9px;animation-delay:.3s"></div>
-    </div>
-    <div class="col-row">
-      <div class="col-block" style="height:26px;background:rgba(0,0,0,0.05);flex:2;border-radius:9px"></div>
-      <div class="col-block" style="height:26px;background:rgba(0,0,0,0.05);border-radius:9px"></div>
-      <div class="col-block" style="height:26px;background:rgba(0,0,0,0.05);border-radius:9px"></div>
-    </div>
-  </div>
-  <div class="collab-text reveal">
-    <div class="section-label" data-i18n="collab_label"></div>
-    <h2 data-i18n="collab_h"></h2>
-    <p data-i18n="collab_p"></p>
-    <div class="collab-features">
-      <div class="collab-feat"><div class="cf-icon">📋</div><div class="cf-text" data-i18n="cf1"></div></div>
-      <div class="collab-feat"><div class="cf-icon">🎯</div><div class="cf-text" data-i18n="cf2"></div></div>
-      <div class="collab-feat"><div class="cf-icon">🚀</div><div class="cf-text" data-i18n="cf3"></div></div>
-    </div>
-  </div>
-</section>
-
 <!-- HOW WE WORK -->
 <section id="how-we-work" style="padding:100px 60px;background:var(--white);">
   <div class="reveal" style="text-align:center;margin-bottom:64px;">
@@ -876,8 +878,8 @@
     <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px;position:relative;z-index:1;">
       <div style="width:88px;height:88px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 8px 30px rgba(85,128,204,0.35);border:4px solid var(--white);">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 10h20M8 16h14M8 22h10" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
-          <rect x="4" y="5" width="28" height="26" rx="4" stroke="#111" stroke-width="2.5"/>
+          <path d="M8 10h20M8 16h14M8 22h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="4" y="5" width="28" height="26" rx="4" stroke="#fff" stroke-width="2.5"/>
         </svg>
       </div>
       <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;" data-i18n="step_num_1"></div>
@@ -920,8 +922,8 @@
     <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px;position:relative;z-index:1;">
       <div style="width:88px;height:88px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 8px 30px rgba(85,128,204,0.35);border:4px solid var(--white);">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="18" cy="18" r="13" stroke="#111" stroke-width="2.5"/>
-          <path d="M11 18l5 5 9-9" stroke="#111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="18" cy="18" r="13" stroke="#fff" stroke-width="2.5"/>
+          <path d="M11 18l5 5 9-9" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;" data-i18n="step_num_4"></div>
@@ -933,9 +935,9 @@
 
   <!-- Bottom badge -->
   <div class="reveal" style="text-align:center;margin-top:56px;">
-    <div style="display:inline-flex;align-items:center;gap:12px;background:#5580cc;border-radius:50px;padding:14px 28px;">
+    <div style="display:inline-flex;align-items:center;gap:12px;background:var(--yellow);border-radius:50px;padding:14px 28px;">
       <span style="font-size:1.3rem;">⚡</span>
-      <span style="font-weight:700;font-size:0.92rem;" data-i18n="how_badge"></span>
+      <span style="font-weight:700;font-size:0.92rem;color:#fff;" data-i18n="how_badge"></span>
     </div>
   </div>
 </section>
@@ -1200,7 +1202,7 @@
     <div class="section-label" data-i18n="price_label"></div>
     <h2 data-i18n="price_h"></h2>
     <p data-i18n="price_p"></p>
-    <a class="btn-dark" href="mailto:contact@wislaweb.co" data-i18n="price_btn"></a>
+    <a class="btn-dark" href="mailto:contact@wislaweb.com" data-i18n="price_btn"></a>
     <!-- Stripe badge -->
     <div style="margin-top:20px;display:inline-flex;align-items:center;gap:8px;background:#f6f9fc;border:1px solid #e0e6f0;border-radius:6px;padding:6px 14px;">
       <span style="font-size:0.68rem;color:#6b7c93;font-weight:500;" data-i18n="stripe_txt"></span>
@@ -1333,8 +1335,8 @@
     <div class="footer-col">
       <h4 data-i18n="foot_contact"></h4>
       <ul>
-        <li><a href="mailto:contact@wislaweb.co">contact@wislaweb.co</a></li>
-        <li><a href="tel:+453233046">+453 233 046</a></li>
+        <li><a href="mailto:contact@wislaweb.com">contact@wislaweb.com</a></li>
+        
         <li><a href="#" data-i18n="foot_city"></a></li>
       </ul>
     </div>
@@ -1492,7 +1494,7 @@ const T = {
 
     hero_badge:"For every business in Warsaw",
     hero_h1:`Your customers are searching for you <span class="highlight">online.</span><br>Are you there?`,
-    hero_p:"We build fast, beautiful websites that rank on Google before your competition does. No technical jargon – your site goes live in 7 days.",
+    hero_p:"We build fast, beautiful websites that rank on Google before your competition does. Your site goes live in 7 days.",
     hero_btn1:"See packages", hero_btn2:"Example projects",
     hero_f1:"Live in 7 days", hero_f2:"Visible on Google", hero_f3:"Perfect on mobile",
     hero_tag1:"Site is live!", hero_tag2:"Ranked #1 on Google",
@@ -1609,7 +1611,7 @@ const T = {
     wa_h:"Chat with us on WhatsApp",
     wa_p:"Got questions before getting started? Message us on WhatsApp – we reply fast.",
     wa_btn:"Message on WhatsApp",
-    foot_brand:"Websites for every business in Warsaw. Fast, effective, no technical jargon.",
+    foot_brand:"Websites for every business in Warsaw. Fast, effective websites for every business.",
     foot_links:"Quick links", foot_contact:"Contact",
     foot_city:"Warsaw, Poland",
     foot_news_h:"Stay in the loop",
@@ -1993,6 +1995,24 @@ function openPreview(type) {
   var overlay = document.getElementById('previewModal');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  // On mobile, scale inner preview to fit width
+  if (window.innerWidth <= 600) {
+    setTimeout(function() {
+      var preview = document.querySelector('.modal-preview > div:last-child');
+      if (preview) {
+        var available = window.innerWidth - 24;
+        var natural = preview.scrollWidth;
+        if (natural > available) {
+          var scale = available / natural;
+          preview.style.transform = 'scale(' + scale + ')';
+          preview.style.transformOrigin = 'top left';
+          preview.style.width = (natural) + 'px';
+          preview.parentElement.style.width = available + 'px';
+          preview.parentElement.style.overflow = 'hidden';
+        }
+      }
+    }, 120);
+  }
 }
 
 function closePreview() {
