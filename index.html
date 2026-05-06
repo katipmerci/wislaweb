@@ -827,11 +827,7 @@
       <a class="btn-primary" href="#pricing" data-i18n="hero_btn1"></a>
       <a class="btn-outline" href="#portfolio" data-i18n="hero_btn2"></a>
     </div>
-    <div class="hero-features">
-      <div class="hero-feat"><div class="hero-feat-icon">⚡</div><span data-i18n="hero_f1"></span></div>
-      <div class="hero-feat"><div class="hero-feat-icon">📍</div><span data-i18n="hero_f2"></span></div>
-      <div class="hero-feat"><div class="hero-feat-icon">📱</div><span data-i18n="hero_f3"></span></div>
-    </div>
+
   </div>
   <div class="hero-visual">
     <div class="hero-mockup">
@@ -1299,7 +1295,7 @@
 
     <!-- CTA button -->
     <div style="text-align:center;">
-      <a href="https://wa.me/48453233046" target="_blank" rel="noopener"
+      <a href="https://wa.me/48453233046" id="wa-link" target="_blank" rel="noopener"
          style="display:inline-flex;align-items:center;gap:14px;background:#25D366;color:#fff;padding:20px 44px;border-radius:50px;text-decoration:none;font-weight:800;font-size:1.05rem;box-shadow:0 12px 40px rgba(37,211,102,0.45);transition:transform 0.2s,box-shadow 0.2s;"
          onmouseover="this.style.transform='translateY(-3px) scale(1.02)';this.style.boxShadow='0 20px 55px rgba(37,211,102,0.55)'"
          onmouseout="this.style.transform='';this.style.boxShadow='0 12px 40px rgba(37,211,102,0.45)'">
@@ -1624,6 +1620,7 @@ const T = {
 let lang = 'pl';
 
 function applyLang(l) {
+  setTimeout(updateWaLink, 10);
   // Also re-apply to mobile nav which shares same data-i18n keys
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = T[l][el.getAttribute('data-i18n')];
@@ -1719,6 +1716,22 @@ document.querySelectorAll('.btn-primary,.btn-dark,.cta-btn-yellow,.nav-cta').for
 var rs = document.createElement('style');
 rs.textContent = '@keyframes rippleAnim{to{transform:scale(2.8);opacity:0}}';
 document.head.appendChild(rs);
+
+
+// ── WHATSAPP PRE-FILLED MESSAGE ──
+var waMessages = {
+  pl: 'Dzień dobry! Chciałbym/Chciałabym dowiedzieć się więcej o usługach Wislaweb.',
+  en: 'Hello! I would like to learn more about Wislaweb services.'
+};
+function updateWaLink() {
+  var lang = document.documentElement.lang || 'pl';
+  var msg = waMessages[lang] || waMessages['pl'];
+  var links = document.querySelectorAll('a[href*="wa.me"]');
+  links.forEach(function(link) {
+    link.href = 'https://wa.me/48453233046?text=' + encodeURIComponent(msg);
+  });
+}
+updateWaLink();
 
 // ── NAV HIDE ON SCROLL DOWN ──
 var lastY = 0;
