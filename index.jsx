@@ -1,4 +1,21 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wislaweb – Be Visible</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
 
 // ─────────────────────────────────────────────
 // ASSETS (base64 – loaded from existing files)
@@ -1146,7 +1163,7 @@ function PortfolioModal({ preview, lang, onClose }) {
 // ─────────────────────────────────────────────
 // MAIN APP
 // ─────────────────────────────────────────────
-export default function App() {
+function App() {
   const [lang, setLang] = useState('pl');
   const [designOpen, setDesignOpen] = useState(false);
   const [splashOpen, setSplashOpen] = useState(false);
@@ -1345,3 +1362,9 @@ export default function App() {
     </>
   );
 }
+
+ReactDOM.render(React.createElement(App), document.getElementById("root"));
+
+  </script>
+</body>
+</html>
